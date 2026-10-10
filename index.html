@@ -194,6 +194,49 @@
       line-height: 1.7;
     }
 
+    /* DEMO */
+    .demo {
+      background: var(--color-surface);
+      padding: 64px 24px 80px;
+    }
+    .demo .section-inner { text-align: center; }
+    .demo-frame {
+      margin-top: 32px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.05);
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .demo-frame img {
+      width: 100%;
+      display: block;
+    }
+    .demo-bar {
+      background: #1e293b;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .demo-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .demo-dot.red { background: #ef4444; }
+    .demo-dot.yellow { background: #eab308; }
+    .demo-dot.green { background: #22c55e; }
+    .demo-bar-url {
+      flex: 1;
+      background: #0f172a;
+      border-radius: 6px;
+      padding: 4px 12px;
+      font-size: 0.72rem;
+      color: #64748b;
+      margin-left: 8px;
+      font-family: 'Inter', monospace;
+    }
+
     /* PROBLEM */
     .problem { background: var(--color-surface); }
     .problem-grid {
@@ -431,6 +474,24 @@
     </div>
   </section>
 
+  <!-- DEMO -->
+  <section class="demo">
+    <div class="section-inner">
+      <span class="section-label">Product Preview</span>
+      <h2 class="section-title">AI Tutoring That Adapts in Real-Time</h2>
+      <p class="section-subtitle" style="margin:0 auto;">Our conversational AI tutor teaches through dialogue, tracks knowledge mastery, and personalizes every learning session.</p>
+      <div class="demo-frame">
+        <div class="demo-bar">
+          <span class="demo-dot red"></span>
+          <span class="demo-dot yellow"></span>
+          <span class="demo-dot green"></span>
+          <span class="demo-bar-url">app.vaaradhiai.com</span>
+        </div>
+        <img src="demo.jpg" alt="VaaradhiAI platform — AI tutor session with adaptive learning path, knowledge map, and real-time progress tracking" loading="lazy">
+      </div>
+    </div>
+  </section>
+
   <!-- PROBLEM -->
   <section class="problem" id="problem">
     <div class="section-inner">
@@ -552,7 +613,9 @@
           <div class="avatar">AD</div>
           <h3>Abhishek Damera</h3>
           <div class="role">Founder &amp; CEO</div>
-          <p>Passionate about using AI to solve education's deepest problems. Building VaaradhiAI to create the personalized learning experience every student deserves.</p>
+          <p style="margin-bottom:12px;">AI/ML researcher with deep expertise in large language models, fine-tuning (LoRA/QLoRA), RAG systems, and multi-agent AI workflows. IIT Madras (B.Tech) and UC Berkeley (M.S.) alumnus.</p>
+          <p style="margin-bottom:12px;">Previously built an MSME Scheme Guidance Chatbot serving 2.6M business owners using RAG, and developed an ANPR system for the Telangana Police Department with ~90% accuracy. Experienced in reinforcement learning, transformer architectures, and deploying production AI systems.</p>
+          <p style="margin-bottom:0;font-size:0.8rem;color:#64748b;"><strong style="color:var(--color-text-secondary);">Honors:</strong> SN Bose Scholar (1 of 40 from India), OPJEMS Award (IIT Madras), Ram Shriram Scholarship</p>
         </div>
       </div>
     </div>
