@@ -3,61 +3,597 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VaaradhiAI</title>
+  <title>VaaradhiAI — Personalized Learning That Adapts to You</title>
+  <meta name="description" content="VaaradhiAI uses AI to deliver personalized, first-principles-based learning experiences that adapt in real-time to each student's strengths and progress.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    /* === RESET === */
-    html, body { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
+    :root {
+      --color-bg: #ffffff;
+      --color-surface: #f8f9fb;
+      --color-text: #111827;
+      --color-text-secondary: #4b5563;
+      --color-primary: #2563eb;
+      --color-primary-dark: #1d4ed8;
+      --color-primary-light: #eff6ff;
+      --color-accent: #7c3aed;
+      --color-border: #e5e7eb;
+      --color-card-bg: #ffffff;
+      --gradient-hero: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+      --gradient-accent: linear-gradient(135deg, #2563eb, #7c3aed);
+    }
 
-    /* === BASE === */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      color: #000; /* Black text for readability */
-      background: #fff; /* White background like SSI */
-      line-height: 1.6; /* Improved flow */
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--color-text);
+      background: var(--color-bg);
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    h1 {
-      font-size: 2.5rem; /* Prominent like SSI's heading */
-      font-weight: 800;
-      margin: 0 0 1.5rem;
-      letter-spacing: -0.02em;
-    }
-    p {
-      margin: 0 0 1.5rem;
-      font-size: 1rem; /* Standard paragraph size */
-      max-width: 65ch; /* Keeps lines readable */
     }
 
-    /* === LAYOUT === */
-    .wrapper {
-      max-width: 600px; /* Narrower like SSI's content width */
-      margin: 8vh auto 12vh;
-      padding: 0 1rem; /* Light padding for edges */
-      text-align: left; /* Left-aligned for natural reading */
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      padding: 0 24px;
     }
-    footer {
-      margin-top: 3rem;
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .logo {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--color-text);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--color-primary); }
+    .nav-links { display: flex; gap: 32px; align-items: center; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--color-text-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--color-primary); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--color-primary);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--color-primary-dark); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--color-primary);
+      border: 1.5px solid var(--color-primary);
+    }
+    .btn-outline:hover { background: var(--color-primary-light); }
+    .btn-white {
+      background: #fff;
+      color: var(--color-text);
+    }
+    .btn-white:hover { background: #f0f0f0; transform: translateY(-1px); }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+    .hamburger svg { width: 24px; height: 24px; color: var(--color-text); }
+
+    /* HERO */
+    .hero {
+      background: var(--gradient-hero);
+      padding: 160px 24px 100px;
+      text-align: center;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 30% 50%, rgba(37,99,235,0.15) 0%, transparent 50%),
+                  radial-gradient(ellipse at 70% 50%, rgba(124,58,237,0.1) 0%, transparent 50%);
+    }
+    .hero-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
       font-size: 0.85rem;
-      color: #666; /* Subtle gray */
+      font-weight: 500;
+      margin-bottom: 28px;
+      color: rgba(255,255,255,0.9);
+    }
+    .hero-badge .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #34d399;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.75);
+      max-width: 600px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* SECTIONS */
+    section { padding: 96px 24px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--color-primary);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--color-text-secondary);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    /* PROBLEM */
+    .problem { background: var(--color-surface); }
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      margin-top: 48px;
+    }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .stat-card {
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .stat-card .number {
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-card .label {
+      font-size: 0.85rem;
+      color: var(--color-text-secondary);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    /* FEATURES */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .feature-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: 32px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--color-primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+    .feature-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      line-height: 1.65;
+    }
+
+    /* HOW IT WORKS */
+    .how { background: var(--color-surface); }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 48px;
+    }
+    .step {
+      text-align: center;
+      position: relative;
+    }
+    .step-number {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--gradient-accent);
+      color: #fff;
+      font-size: 1.3rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .step h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .step p {
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      line-height: 1.65;
+    }
+
+    /* ABOUT / TEAM */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+      margin-top: 48px;
+    }
+    .about-text p {
+      color: var(--color-text-secondary);
+      margin-bottom: 16px;
+      line-height: 1.75;
+    }
+    .founder-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: 32px;
+    }
+    .founder-card .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--gradient-accent);
+      color: #fff;
+      font-size: 1.6rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .founder-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; }
+    .founder-card .role { font-size: 0.85rem; color: var(--color-primary); font-weight: 600; margin-bottom: 12px; }
+    .founder-card p { font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.65; }
+
+    /* CTA */
+    .cta {
+      background: var(--gradient-hero);
+      color: #fff;
+      text-align: center;
+      padding: 80px 24px;
+    }
+    .cta .section-title { color: #fff; }
+    .cta p {
+      color: rgba(255,255,255,0.75);
+      max-width: 500px;
+      margin: 0 auto 32px;
+      font-size: 1.05rem;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--color-border);
+      padding: 40px 24px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-inner p { font-size: 0.85rem; color: var(--color-text-secondary); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      font-size: 0.85rem;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+    }
+    .footer-links a:hover { color: var(--color-primary); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: block; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: #fff;
+        padding: 24px;
+        border-bottom: 1px solid var(--color-border);
+        gap: 16px;
+      }
+      .hero { padding: 130px 24px 70px; }
+      .problem-grid,
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; gap: 40px; }
+      .stat-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
     }
   </style>
 </head>
 <body>
-  <div class="wrapper">
-    <h1>VaaradhiAI</h1>
 
-    <p>
-      Traditional education in India, especially for competitive exams, emphasizes rote memorization and standardized curricula, failing to address core first principles of learning: knowledge emerges from experience, not passive data accumulation; the brain forgets irrelevant information to conserve energy; and 99 % of studied content—such as disconnected history, geography, or unused languages—is wasted without tying to real problems or personal aptitude. This system prioritizes grades over true understanding, leading to mismatched skills for the 10 lakh people added to the workforce monthly, and ignores the need for effortful, relevant engagement that builds lasting mastery through failure, exploration, and self-explanation.
-    </p>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="logo">Vaaradhi<span>AI</span></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#problem">Problem</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact" class="btn btn-primary">Get Early Access</a></li>
+      </ul>
+      <button class="hamburger" onclick="document.getElementById('nav-links').classList.toggle('open')" aria-label="Toggle menu">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </nav>
 
-    <p>
-      Vaaradhi's personalization approach revolutionizes this by adapting in real-time to each learner's strengths, weaknesses, and progress, guided by first principles like teaching problems over tools and fostering aptitude through experiential paths.
-    </p>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Building the future of personalized education
+      </div>
+      <h1>Learning That Thinks<br>With You, Not At You</h1>
+      <p>VaaradhiAI builds AI-powered learning experiences that adapt in real-time to each student — teaching through first principles, not rote memorization.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-white">Get Early Access</a>
+        <a href="#features" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.3);">Learn More</a>
+      </div>
+    </div>
+  </section>
 
-    <footer>
-      © 2025 VaaradhiAI
-    </footer>
-  </div>
+  <!-- PROBLEM -->
+  <section class="problem" id="problem">
+    <div class="section-inner">
+      <span class="section-label">The Problem</span>
+      <h2 class="section-title">Education Is Broken at Scale</h2>
+      <p class="section-subtitle">India adds 10 lakh people to the workforce every month — yet 99% of what students study is disconnected from real aptitude and career readiness.</p>
+      <div class="problem-grid">
+        <div>
+          <p style="color:var(--color-text-secondary);line-height:1.75;margin-bottom:16px;">
+            Traditional education, especially for competitive exams, prioritizes grades over understanding. Standardized curricula fail to address how learning actually works: knowledge emerges from experience, not passive memorization.
+          </p>
+          <p style="color:var(--color-text-secondary);line-height:1.75;">
+            The brain forgets irrelevant information to conserve energy. Disconnected history, geography, and unused languages are wasted without tying to real problems or personal aptitude. The system produces mismatched skills at massive scale.
+          </p>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="number">99%</div>
+            <div class="label">Of studied content has no connection to real aptitude</div>
+          </div>
+          <div class="stat-card">
+            <div class="number">10L+</div>
+            <div class="label">People enter India's workforce every month</div>
+          </div>
+          <div class="stat-card">
+            <div class="number">1:50</div>
+            <div class="label">Teacher-to-student ratio makes personalization impossible</div>
+          </div>
+          <div class="stat-card">
+            <div class="number">72%</div>
+            <div class="label">Of employers say graduates lack job-ready skills</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="section-inner">
+      <span class="section-label">Our Approach</span>
+      <h2 class="section-title">AI That Teaches Like a Great Mentor</h2>
+      <p class="section-subtitle">Vaaradhi adapts to each learner's strengths, weaknesses, and pace — guided by first principles, not one-size-fits-all curricula.</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F9E0;</div>
+          <h3>Adaptive Learning Paths</h3>
+          <p>Our AI continuously assesses comprehension and adjusts difficulty, pacing, and topic sequencing in real-time for each student.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F3AF;</div>
+          <h3>First-Principles Teaching</h3>
+          <p>We teach the "why" before the "what" — building deep conceptual understanding that transfers across problems and domains.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4CA;</div>
+          <h3>Real-Time Progress Analytics</h3>
+          <p>Students and parents get detailed insights into learning patterns, knowledge gaps, and growth trajectories.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F50D;</div>
+          <h3>Aptitude Discovery</h3>
+          <p>Our system identifies natural strengths and interests, guiding students toward careers where they'll thrive — not just pass exams.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4AC;</div>
+          <h3>Conversational AI Tutoring</h3>
+          <p>Powered by advanced LLMs, students learn through dialogue — asking questions, exploring tangents, and building intuition naturally.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F310;</div>
+          <h3>Vernacular Support</h3>
+          <p>Learning in your language matters. Vaaradhi supports multiple Indian languages to reach students beyond English-medium schools.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="section-inner">
+      <div style="text-align:center;">
+        <span class="section-label">How It Works</span>
+        <h2 class="section-title">From First Login to Mastery</h2>
+        <p class="section-subtitle" style="margin:0 auto;">Three steps to a learning experience that truly fits the student.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Diagnostic Assessment</h3>
+          <p>A short adaptive assessment maps the student's current knowledge, learning style, and areas of interest.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Personalized Curriculum</h3>
+          <p>AI generates a custom learning path — choosing topics, difficulty, and teaching style matched to the student.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Learn, Adapt, Grow</h3>
+          <p>As the student progresses, the AI continuously recalibrates — reinforcing weak areas and accelerating through strengths.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-inner">
+      <span class="section-label">About Us</span>
+      <h2 class="section-title">Built by People Who Lived the Problem</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>VaaradhiAI was born from a firsthand experience of India's education system — one that rewards memorization over understanding and produces graduates misaligned with real-world demands.</p>
+          <p>We're building an AI-native learning platform that treats every student as unique. Using advances in large language models and adaptive learning science, Vaaradhi delivers personalized education at a scale that was previously impossible.</p>
+          <p>Our mission: make world-class, personalized education accessible to every student in India — regardless of language, location, or economic background.</p>
+        </div>
+        <div class="founder-card">
+          <div class="avatar">AD</div>
+          <h3>Abhishek Damera</h3>
+          <div class="role">Founder &amp; CEO</div>
+          <p>Passionate about using AI to solve education's deepest problems. Building VaaradhiAI to create the personalized learning experience every student deserves.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="contact">
+    <div class="section-inner" style="max-width:600px;">
+      <span class="section-label" style="color:rgba(255,255,255,0.6);">Get Started</span>
+      <h2 class="section-title">Join the Waitlist</h2>
+      <p>We're onboarding our first cohort of students and schools. Be among the first to experience truly personalized learning.</p>
+      <a href="mailto:damera@vaaradhiai.com" class="btn btn-white" style="font-size:1rem;padding:14px 32px;">Contact Us &rarr;</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <p>&copy; 2026 VaaradhiAI. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="mailto:damera@vaaradhiai.com">Contact</a>
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.getElementById('nav-links').classList.remove('open');
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>
